@@ -21,6 +21,12 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 // Pages
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Billing from './pages/Billing';
+import BilelControlPanel from './pages/BilelControlPanel';
+import Reception from './pages/Reception';
+import POS from './pages/POS';
+import POSLogin from './pages/POSLogin';
+import POSDashboard from './pages/POSDashboard';
 
 function App() {
   useEffect(() => {
@@ -35,12 +41,17 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/pos-login" element={<POSLogin />} />
+            <Route path="/bilel-control" element={<BilelControlPanel />} />
             
             {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
               <Route element={<Layout />}>
                 <Route path="/dashboard" element={<Dashboard />} />
-                {/* Add more routes here */}
+                <Route path="/billing" element={<Billing />} />
+                <Route path="/reception" element={<Reception />} />
+                <Route path="/pos" element={<POS />} />
+                <Route path="/pos-dashboard" element={<POSDashboard />} />
               </Route>
             </Route>
             

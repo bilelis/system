@@ -77,6 +77,12 @@ const Sidebar: React.FC<SidebarProps> = ({ open, drawerWidth, onClose, variant }
       icon: <AnalyticsIcon />,
       roles: ['admin', 'manager'],
     },
+      {
+        path: '/billing',
+        label: 'Billing',
+        icon: <POSIcon />, // You may want to use a different icon
+        roles: ['admin', 'manager', 'receptionist'],
+      },
   ];
 
   // User-specific items
