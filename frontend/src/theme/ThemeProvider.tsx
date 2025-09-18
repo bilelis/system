@@ -1,7 +1,10 @@
 import React, { createContext, useState, useMemo, useContext, ReactNode } from 'react';
-import { ThemeProvider as MuiThemeProvider, PaletteMode } from '@mui/material';
+import { ThemeProvider as MuiThemeProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createAppTheme } from './theme';
+
+// Use string literal type instead of PaletteMode
+type PaletteMode = 'light' | 'dark';
 
 // Create theme context
 interface ThemeContextType {

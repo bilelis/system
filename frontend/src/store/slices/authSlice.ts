@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import api from '../../services/api';
 
 // Define types
 interface User {
@@ -31,18 +32,28 @@ export const login = createAsyncThunk(
   'auth/login',
   async (credentials: { email: string; password: string }, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/api/auth/login', credentials);
-      const { token, user } = response.data;
+      // Send JSON data directly
+      const response = await api.post('/auth/login', {
+        username: credentials.email, // Backend uses username field for email
+        password: credentials.password
+      });
+      
+      const { access_token, token_type, role, user_id } = response.data;
       
       // Store token in localStorage
-      localStorage.setItem('token', token);
+      localStorage.setItem('token', access_token);
       
-      // Set default Authorization header for all requests
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      // Create user object from response
+      const user = {
+        id: parseInt(user_id),
+        email: credentials.email,
+        name: credentials.email, // We'll get the real name from /me endpoint later
+        role: role
+      };
       
-      return { token, user };
+      return { token: access_token, user };
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Login failed');
+      return rejectWithValue(error.response?.data?.detail || error.response?.data?.message || 'Login failed');
     }
   }
 );
@@ -50,7 +61,6 @@ export const login = createAsyncThunk(
 // Logout thunk
 export const logout = createAsyncThunk('auth/logout', async () => {
   localStorage.removeItem('token');
-  delete axios.defaults.headers.common['Authorization'];
   return null;
 });
 
@@ -65,16 +75,12 @@ export const getCurrentUser = createAsyncThunk(
         return rejectWithValue('No token found');
       }
       
-      // Set default Authorization header
-      axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`;
-      
-      const response = await axios.get('/api/auth/me');
+      const response = await api.get('/auth/me');
       return response.data;
     } catch (error: any) {
       // If token is invalid, logout
       if (error.response?.status === 401) {
         localStorage.removeItem('token');
-        delete axios.defaults.headers.common['Authorization'];
       }
       return rejectWithValue(error.response?.data?.message || 'Failed to get user');
     }

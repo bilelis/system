@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Hotel Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-info span {
+            font-weight: 500;
+        }
+        
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .welcome-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        
+        .welcome-card p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            color: #667eea;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .stat-card .description {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .feature-card .btn:hover {
+            background: #5a6fd8;
+        }
+        
+        .no-auth {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        
+        .no-auth h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .no-auth p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .no-auth .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .no-auth .btn:hover {
+            background: #5a6fd8;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="authenticated-content" style="display: none;">
+            <div class="header">
+                <h1>Hotel Management System</h1>
+                <div class="user-info">
+                    <span id="user-role">Admin</span>
+                    <button class="logout-btn" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+            
+            <div class="container">
+                <div class="welcome-card">
+                    <h2>Welcome to the Dashboard</h2>
+                    <p id="welcome-message">Manage your hotel operations efficiently with our comprehensive system.</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Available Rooms</h3>
+                        <div class="number">24</div>
+                        <div class="description">Out of 30 rooms</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>Today's Check-ins</h3>
+                        <div class="number">8</div>
+                        <div class="description">Guests arriving today</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>Occupancy Rate</h3>
+                        <div class="number">80%</div>
+                        <div class="description">Current occupancy</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>Revenue Today</h3>
+                        <div class="number">$2,450</div>
+                        <div class="description">Total revenue</div>
+                    </div>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Room Management</h3>
+                        <p>View, add, and manage all hotel rooms and their statuses.</p>
+                        <button class="btn">Manage Rooms</button>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>Guest Management</h3>
+                        <p>Handle guest information, bookings, and check-in/check-out.</p>
+                        <button class="btn">Manage Guests</button>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>Billing & Payments</h3>
+                        <p>Process payments, generate invoices, and track financial records.</p>
+                        <button class="btn">View Billing</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="unauthenticated-content" class="no-auth" style="display: none;">
+            <h2>Access Denied</h2>
+            <p>You need to be logged in to access the dashboard.</p>
+            <a href="login.html" class="btn">Go to Login</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const authToken = localStorage.getItem('authToken');
+            const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+            
+            const authenticatedContent = document.getElementById('authenticated-content');
+            const unauthenticatedContent = document.getElementById('unauthenticated-content');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const userRole = document.getElementById('user-role');
+            const welcomeMessage = document.getElementById('welcome-message');
+            
+            if (authToken && userInfo.username) {
+                // User is authenticated
+                authenticatedContent.style.display = 'block';
+                
+                // Set user info
+                userRole.textContent = userInfo.role.charAt(0).toUpperCase() + userInfo.role.slice(1);
+                welcomeMessage.textContent = `Hello ${userInfo.full_name || userInfo.username}! Manage your hotel operations efficiently with our comprehensive system.`;
+                
+                // Logout functionality
+                logoutBtn.addEventListener('click', function() {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('userInfo');
+                    window.location.href = 'login.html';
+                });
+            } else {
+                // User is not authenticated
+                unauthenticatedContent.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

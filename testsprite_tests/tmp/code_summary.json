@@ -1,0 +1,162 @@
+{
+  "tech_stack": [
+    "TypeScript",
+    "JavaScript", 
+    "Python",
+    "React",
+    "FastAPI",
+    "Material-UI",
+    "Redux Toolkit",
+    "React Router",
+    "PostgreSQL",
+    "SQLAlchemy",
+    "Docker",
+    "Node.js",
+    "Express",
+    "JWT",
+    "i18next",
+    "Vite",
+    "PySpark",
+    "OpenAI API"
+  ],
+  "features": [
+    {
+      "name": "Authentication System",
+      "description": "JWT-based authentication with login, protected routes, and user management",
+      "files": [
+        "frontend/src/pages/Login.tsx",
+        "frontend/src/pages/POSLogin.tsx", 
+        "frontend/src/components/auth/ProtectedRoute.tsx",
+        "frontend/src/store/slices/authSlice.ts",
+        "frontend/src/services/authService.ts",
+        "backend/app/api/v1/endpoints/auth.py",
+        "backend/app/core/security.py",
+        "gateway/src/jwt.js"
+      ]
+    },
+    {
+      "name": "Admin Dashboard",
+      "description": "Main dashboard with analytics, KPIs, and hotel management overview",
+      "files": [
+        "frontend/src/pages/Dashboard.tsx",
+        "components/KPI.tsx",
+        "backend/app/api/v1/endpoints/analytics.py",
+        "backend/app/services/analytics.py"
+      ]
+    },
+    {
+      "name": "Point of Sale (POS) System", 
+      "description": "POS interface for restaurant/bar operations with dedicated login and dashboard",
+      "files": [
+        "frontend/src/pages/POS.tsx",
+        "frontend/src/pages/POSDashboard.tsx",
+        "frontend/src/pages/POSLogin.tsx",
+        "backend/app/api/v1/endpoints/pos.py"
+      ]
+    },
+    {
+      "name": "Billing Management",
+      "description": "Invoice and billing system for hotel operations",
+      "files": [
+        "frontend/src/pages/Billing.tsx",
+        "backend/app/api/v1/endpoints/orders.py",
+        "backend/app/models/order.py",
+        "backend/app/schemas/order.py"
+      ]
+    },
+    {
+      "name": "Guest Management",
+      "description": "Guest registration, check-in/check-out, and guest information management",
+      "files": [
+        "backend/app/api/v1/endpoints/guests.py",
+        "backend/app/models/guest.py", 
+        "backend/app/schemas/guest.py"
+      ]
+    },
+    {
+      "name": "Room Management",
+      "description": "Hotel room booking, availability, and room status management",
+      "files": [
+        "backend/app/api/v1/endpoints/rooms.py",
+        "backend/app/models/room.py",
+        "backend/app/schemas/room.py"
+      ]
+    },
+    {
+      "name": "Reception Interface",
+      "description": "Front desk operations and reception management interface",
+      "files": [
+        "frontend/src/pages/Reception.tsx"
+      ]
+    },
+    {
+      "name": "Control Panel",
+      "description": "Administrative control panel for system management (Bilel's special access)",
+      "files": [
+        "frontend/src/pages/BilelControlPanel.tsx"
+      ]
+    },
+    {
+      "name": "AI Chatbot Integration",
+      "description": "AI-powered chatbot using Gemini API for guest assistance and automation",
+      "files": [
+        "frontend/src/components/Chatbot.tsx",
+        "components/Chatbot.tsx",
+        "services/geminiService.ts"
+      ]
+    },
+    {
+      "name": "Internationalization (i18n)",
+      "description": "Multi-language support for Arabic and English",
+      "files": [
+        "frontend/src/i18n/i18n.ts",
+        "frontend/src/i18n/locales/ar.ts",
+        "frontend/src/i18n/locales/en.ts"
+      ]
+    },
+    {
+      "name": "Theme System",
+      "description": "Material-UI based theming with custom theme configuration",
+      "files": [
+        "frontend/src/theme/ThemeProvider.tsx",
+        "frontend/src/theme/theme.ts"
+      ]
+    },
+    {
+      "name": "Layout Components",
+      "description": "Reusable layout components including navigation and sidebar",
+      "files": [
+        "frontend/src/components/layout/Layout.tsx",
+        "frontend/src/components/layout/Navbar.tsx",
+        "frontend/src/components/layout/Sidebar.tsx",
+        "components/Sidebar.tsx"
+      ]
+    },
+    {
+      "name": "API Gateway",
+      "description": "JWT middleware and API routing gateway",
+      "files": [
+        "gateway/src/index.js",
+        "gateway/src/jwt.js"
+      ]
+    },
+    {
+      "name": "Database Layer",
+      "description": "PostgreSQL database with migrations, seeds, and session management",
+      "files": [
+        "database/migrations/001_initial_schema.sql",
+        "database/migrations/002_pos_schema.sql", 
+        "database/seeds/001_sample_data.sql",
+        "database/config.js",
+        "backend/app/db/session.py"
+      ]
+    },
+    {
+      "name": "Mock Data System",
+      "description": "Mock data for development and testing purposes",
+      "files": [
+        "data/mockData.ts"
+      ]
+    }
+  ]
+}

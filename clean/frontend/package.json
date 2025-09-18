@@ -1,0 +1,17 @@
+{
+  "name": "hotel-management-frontend",
+  "version": "1.0.0",
+  "description": "Clean Hotel Management System Frontend",
+  "main": "app.js",
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "dev": "python -m http.server 8080"
+  },
+  "keywords": [
+    "hotel",
+    "management",
+    "frontend"
+  ],
+  "author": "Clean Hotel Management System",
+  "license": "MIT"
+}

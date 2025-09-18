@@ -1,8 +1,17 @@
-import { createTheme, ThemeOptions } from '@mui/material/styles';
-import { PaletteMode } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
+
+// Use string literal type instead of PaletteMode
+type PaletteMode = 'light' | 'dark';
+
+// Define a basic theme options interface
+interface CustomThemeOptions {
+  palette?: any;
+  typography?: any;
+  components?: any;
+}
 
 // Define theme settings for light and dark modes
-export const getThemeOptions = (mode: PaletteMode): ThemeOptions => ({
+export const getThemeOptions = (mode: PaletteMode): CustomThemeOptions => ({
   palette: {
     mode,
     ...(mode === 'light'

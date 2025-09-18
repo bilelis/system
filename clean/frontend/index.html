@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>Hotel Management System</h1>
+            <nav>
+                <ul>
+                    <li><a href="#login">Login</a></li>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#rooms">Rooms</a></li>
+                    <li><a href="#guests">Guests</a></li>
+                    <li><a href="#orders">Orders</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="login" class="page">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <div>
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div>
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+            </section>
+            
+            <section id="dashboard" class="page hidden">
+                <h2>Dashboard</h2>
+                <div id="user-info"></div>
+                <div id="stats">
+                    <div class="stat-card">
+                        <h3>Rooms</h3>
+                        <p id="room-count">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Guests</h3>
+                        <p id="guest-count">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Orders</h3>
+                        <p id="order-count">0</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="rooms" class="page hidden">
+                <h2>Rooms Management</h2>
+                <div id="rooms-list"></div>
+            </section>
+            
+            <section id="guests" class="page hidden">
+                <h2>Guests Management</h2>
+                <div id="guests-list"></div>
+            </section>
+            
+            <section id="orders" class="page hidden">
+                <h2>Orders Management</h2>
+                <div id="orders-list"></div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

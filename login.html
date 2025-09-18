@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Management System - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .logo {
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            color: #333;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .logo p {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .debug-info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e2e3e5;
+            border-radius: 5px;
+            font-size: 12px;
+            text-align: left;
+            display: none;
+        }
+        
+        .debug-toggle {
+            background: none;
+            border: none;
+            color: #667eea;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>Hotel Management System</h1>
+            <p>Sign in to your account</p>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" class="btn" id="loginBtn">Sign In</button>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Signing in...</p>
+            </div>
+            
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+            
+            <button type="button" class="debug-toggle" id="debugToggle">Show Debug Info</button>
+            <div class="debug-info" id="debugInfo"></div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+            const loading = document.getElementById('loading');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            const debugToggle = document.getElementById('debugToggle');
+            const debugInfo = document.getElementById('debugInfo');
+            
+            // Test credentials
+            document.getElementById('username').value = 'admin';
+            document.getElementById('password').value = 'password123';
+            
+            // Debug toggle
+            debugToggle.addEventListener('click', function() {
+                if (debugInfo.style.display === 'none') {
+                    debugInfo.style.display = 'block';
+                    debugToggle.textContent = 'Hide Debug Info';
+                } else {
+                    debugInfo.style.display = 'none';
+                    debugToggle.textContent = 'Show Debug Info';
+                }
+            });
+            
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                // Hide previous messages
+                errorMessage.style.display = 'none';
+                successMessage.style.display = 'none';
+                debugInfo.style.display = 'none';
+                
+                // Show loading
+                loginBtn.style.display = 'none';
+                loading.style.display = 'block';
+                
+                try {
+                    const requestData = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ username, password })
+                    };
+                    
+                    // Update debug info
+                    debugInfo.innerHTML = `
+                        <strong>Request:</strong><br>
+                        URL: http://localhost:8005/api/v1/simple-auth/simple-login<br>
+                        Method: POST<br>
+                        Headers: Content-Type: application/json<br>
+                        Body: ${JSON.stringify({ username, password })}<br><br>
+                    `;
+                    
+                    const response = await fetch('http://localhost:8005/api/v1/simple-auth/simple-login', requestData);
+                    
+                    // Update debug info with response
+                    debugInfo.innerHTML += `
+                        <strong>Response:</strong><br>
+                        Status: ${response.status} ${response.statusText}<br>
+                        Headers: ${JSON.stringify(Object.fromEntries(response.headers.entries()))}<br>
+                    `;
+                    
+                    const data = await response.json();
+                    
+                    // Update debug info with response body
+                    debugInfo.innerHTML += `
+                        Body: ${JSON.stringify(data)}<br>
+                    `;
+                    
+                    if (response.ok) {
+                        // Store token in localStorage
+                        localStorage.setItem('authToken', data.access_token);
+                        localStorage.setItem('userInfo', JSON.stringify(data.user));
+                        
+                        // Show success message
+                        successMessage.textContent = 'Login successful! Redirecting...';
+                        successMessage.style.display = 'block';
+                        
+                        // Redirect to dashboard (or you can open a new page)
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 1000);
+                    } else {
+                        // Show error message
+                        errorMessage.textContent = data.detail || 'Login failed. Please try again.';
+                        errorMessage.style.display = 'block';
+                    }
+                } catch (error) {
+                    // Show error message with details
+                    errorMessage.innerHTML = `
+                        Network error. Please check your connection.<br>
+                        <small>Error: ${error.message}</small>
+                    `;
+                    errorMessage.style.display = 'block';
+                    
+                    // Update debug info with error
+                    debugInfo.innerHTML += `
+                        <strong>Error:</strong><br>
+                        Message: ${error.message}<br>
+                        Stack: ${error.stack}<br>
+                    `;
+                } finally {
+                    // Hide loading
+                    loading.style.display = 'none';
+                    loginBtn.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

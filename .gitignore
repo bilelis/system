@@ -58,6 +58,12 @@ Thumbs.db
 /tmp
 /out-tsc
 
+# Virtual Environment
+.venv/
+backend/.venv/
+env/
+venv/
+
 # Misc
 .sass-cache/
 connect.lock

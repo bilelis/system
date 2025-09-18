@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Hotel Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .welcome {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 0.5rem 0;
+        }
+        .no-auth {
+            text-align: center;
+            padding: 3rem;
+        }
+        .login-link {
+            color: #667eea;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="authenticated" style="display: none;">
+        <div class="header">
+            <h1>Hotel Management System</h1>
+            <button class="logout-btn" id="logoutBtn">Logout</button>
+        </div>
+        
+        <div class="container">
+            <div class="welcome">
+                <h2>Welcome, <span id="userName"></span>!</h2>
+                <p>You are logged in as <strong id="userRole"></strong></p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Available Rooms</h3>
+                    <div class="stat-number">24</div>
+                    <p>Out of 30 rooms</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Today's Check-ins</h3>
+                    <div class="stat-number">8</div>
+                    <p>Guests arriving today</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Occupancy Rate</h3>
+                    <div class="stat-number">80%</div>
+                    <p>Current occupancy</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Revenue Today</h3>
+                    <div class="stat-number">$2,450</div>
+                    <p>Total revenue</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="unauthenticated" style="display: none;">
+        <div class="no-auth">
+            <h2>Access Denied</h2>
+            <p>You need to be logged in to view this page.</p>
+            <a href="login_simple.html" class="login-link">Go to Login</a>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is authenticated
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        
+        if (token && user.username) {
+            // User is authenticated
+            document.getElementById('authenticated').style.display = 'block';
+            document.getElementById('userName').textContent = user.full_name || user.username;
+            document.getElementById('userRole').textContent = user.role;
+            
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = 'login_simple.html';
+            });
+        } else {
+            // User is not authenticated
+            document.getElementById('unauthenticated').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

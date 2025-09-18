@@ -27,12 +27,27 @@ import Reception from './pages/Reception';
 import POS from './pages/POS';
 import POSLogin from './pages/POSLogin';
 import POSDashboard from './pages/POSDashboard';
+import Debug from './pages/Debug';
 
 function App() {
   useEffect(() => {
     // Check if user is already logged in
     store.dispatch(getCurrentUser());
   }, []);
+
+  // Temporary debug mode - remove after testing
+  const debugMode = false;
+  
+  if (debugMode) {
+    return (
+      <Provider store={store}>
+        <ThemeProvider>
+          <CssBaseline />
+          <Debug />
+        </ThemeProvider>
+      </Provider>
+    );
+  }
 
   return (
     <Provider store={store}>
@@ -43,6 +58,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/pos-login" element={<POSLogin />} />
             <Route path="/bilel-control" element={<BilelControlPanel />} />
+            <Route path="/debug" element={<Debug />} />
             
             {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
@@ -55,9 +71,9 @@ function App() {
               </Route>
             </Route>
             
-            {/* Redirect to dashboard if logged in, otherwise to login */}
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            {/* Redirect to login for now */}
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Hotel Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .login-header h1 {
+            color: #333;
+            margin: 0;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        button:hover {
+            background: #5a6fd8;
+        }
+        .error {
+            color: #e74c3c;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+        }
+        .loading {
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Hotel Management System</h1>
+            <p>Please sign in to your account</p>
+        </div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" id="loginBtn">Login</button>
+            <div class="loading" id="loading">Logging in...</div>
+            <div class="error" id="error"></div>
+        </form>
+    </div>
+
+    <script>
+        // Pre-fill test credentials
+        document.getElementById('username').value = 'admin';
+        document.getElementById('password').value = 'password123';
+        
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            
+            // Hide error, show loading
+            error.style.display = 'none';
+            loading.style.display = 'block';
+            loginBtn.disabled = true;
+            
+            try {
+                const response = await fetch('http://localhost:8005/api/v1/simple-auth/simple-login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    // Store token and user info
+                    localStorage.setItem('token', data.access_token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    // Redirect to dashboard
+                    window.location.href = 'dashboard.html';
+                } else {
+                    const errorData = await response.json();
+                    error.textContent = errorData.detail || 'Login failed';
+                    error.style.display = 'block';
+                }
+            } catch (err) {
+                error.textContent = 'Network error. Check if backend is running.';
+                error.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+                loginBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
